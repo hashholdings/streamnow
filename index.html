@@ -1,0 +1,137 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>📡 StreamNow</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      background-size: 400% 400%;
+      animation: gradientFlow 12s ease infinite;
+      color: #fff;
+    }
+    @keyframes gradientFlow {
+      0% {background-position: 0% 50%;}
+      50% {background-position: 100% 50%;}
+      100% {background-position: 0% 50%;}
+    }
+    header {
+      text-align: center;
+      padding: 40px 20px 10px;
+      font-size: 40px;
+      font-weight: bold;
+      color: #ffffff;
+      text-shadow: 0 4px 20px rgba(255, 255, 255, 0.1);
+    }
+    .selector {
+      display: flex;
+      justify-content: center;
+      padding: 20px;
+    }
+    select {
+      padding: 12px 24px;
+      font-size: 1rem;
+      border-radius: 14px;
+      border: none;
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+      backdrop-filter: blur(6px);
+    }
+    select option {
+      background: #1a1a1a;
+      color: white;
+    }
+    .channel-card {
+      backdrop-filter: blur(10px);
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      max-width: 960px;
+      margin: 0 auto 60px;
+    }
+    .channel-card:hover {
+      transform: scale(1.03);
+      box-shadow: 0 10px 30px rgba(0, 255, 255, 0.4);
+    }
+    .channel-card video {
+      width: 100%;
+      border-radius: 20px 20px 0 0;
+      display: block;
+    }
+    .channel-title {
+      padding: 15px;
+      font-size: 20px;
+      font-weight: 500;
+      background: rgba(0, 0, 0, 0.3);
+      text-align: center;
+      color: #fff;
+      letter-spacing: 1px;
+      border-radius: 0 0 20px 20px;
+    }
+    footer {
+      text-align: center;
+      padding: 30px 10px;
+      font-size: 0.85rem;
+      color: #ccc;
+      background: rgba(255, 255, 255, 0.04);
+    }
+  </style>
+</head>
+<body>
+  <header>📡 StreamNow</header>
+  <p style="text-align: center; opacity: 0.8;">Stream your favorite TV channels – no ads, fast and free.</p>
+  <div class="selector">
+    <select id="channelSelector">
+      <option value="https://d35j504z0x2vu2.cloudfront.net/v1/manifest/0bc8e8376bd8417a1b6761138aa41c26c7309312/9xm/23886666-8fc5-470f-aab1-bd637ed607b1/3.m3u8">9XM</option>
+      <option value="https://d3qs3d2rkhfqrt.cloudfront.net/out/v1/2839e3d1e0f84a2e821c1708d5fdfdf0/index.m3u8">Dangal TV</option>
+      <option value="https://server.livelegitpro.in/globalpunjab/globalpunjab/tracks-v1a1/mono.ts.m3u8">Global Punjab</option>
+      <option value="https://feeds.intoday.in/aajtak/api/aajtakhd/master.m3u8">Aajtak HD</option>
+      <option value="https://aasthaott.akamaized.net/110923/smil:bhajan.smil/chunklist_b264000.m3u8">Aastha Hindi</option>
+      <option value="https://cdn-uw2-prod.tsv2.amagi.tv/linear/amg01412-xiaomiasia-yrfmusic-xiaomi/playlist.m3u8">YRF Music</option>
+      <option value="https://27c980761ff9437d929e64647afe183a.mediatailor.us-east-1.amazonaws.com/v1/manifest/44f73ba4d03e9607dcd9bebdcb8494d86964f1d8/RakutenTV-eu_TravelXP/986a2113-abcd-46b5-80f1-cdbc6d42533e/0.m3u8">Travel XP</option>
+    </select>
+  </div>
+  <div class="channel-card">
+    <video id="video" controls autoplay muted></video>
+    <div class="channel-title" id="channelName">9XM</div>
+  </div>
+  <footer>
+    &copy; 2025 StreamNow. All rights belong to original broadcaster.
+  </footer>
+  <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+  <script>
+    const video = document.getElementById('video');
+    const selector = document.getElementById('channelSelector');
+    const channelName = document.getElementById('channelName');
+    function loadStream(url, name) {
+      channelName.textContent = name;
+      if (Hls.isSupported()) {
+        if (window.hls) {
+          window.hls.destroy();
+        }
+        const hls = new Hls();
+        window.hls = hls;
+        hls.loadSource(url);
+        hls.attachMedia(video);
+      } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+        video.src = url;
+      } else {
+        alert('This browser does not support HLS streaming.');
+      }
+    }
+    selector.addEventListener('change', () => {
+      const name = selector.options[selector.selectedIndex].textContent;
+      loadStream(selector.value, name);
+    });
+    const defaultName = selector.options[selector.selectedIndex].textContent;
+    loadStream(selector.value, defaultName);
+  </script>
+</body>
+</html>
