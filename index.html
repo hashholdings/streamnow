@@ -1,12 +1,14 @@
-
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>📡 StreamNow</title>
-  <style>
-    body {
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>
+   📡 StreamNow
+  </title>
+<style>
+   body {
   margin: 0;
   font-family: 'Segoe UI', sans-serif;
   background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
@@ -117,61 +119,88 @@
     padding: 20px 10px;
   }
 }
-</style>
+
+    #loadingIndicator {
+      position: absolute;
+      top: 15px;
+      right: 20px;
+      background: rgba(0, 0, 0, 0.6);
+      color: #0ff;
+      font-size: 0.9rem;
+      padding: 6px 14px;
+      border-radius: 10px;
+      backdrop-filter: blur(2px);
+      display: none;
+      z-index: 10;
+    }
+  </style>
 </head>
 <body>
-  <header id="mainHeader">📡 StreamNow</header>
-
-  <p style="text-align: center; opacity: 0.8;">Stream your favorite TV channels – no ads, fast and free.</p>
-  <div class="selector">
-    <select id="channelSelector">
-  <optgroup label="News">
-    <option value="https://youtu.be/nyd-xznCpJc">ABP News</option>
-    <option value="https://youtu.be/sf9foqi3JQU">ANI News</option>
-    <option value="https://ndtv24x7elemarchana.akamaized.net/hls/live/2003678/ndtv24x7/masterp_720p@3.m3u8">NDTV</option>
-    <option value="https://vidcdn.vidgyor.com/news24-origin/liveabr/playlist.m3u8">News24</option>
-    <option value="https://server.livelegitpro.in/globalpunjab/globalpunjab/tracks-v1a1/mono.ts.m3u8">Global Punjab</option>
-    <option value="https://feeds.intoday.in/aajtak/api/aajtakhd/master.m3u8">Aajtak HD</option>
-    <option value="https://indiatodaylive.akamaized.net/hls/live/2014320/indiatoday/indiatodaylive/playlist.m3u8">India Today</option>
-  </optgroup>
-  <optgroup label="Spiritual">
-    <option value="https://aasthaott.akamaized.net/110923/smil:bhajan.smil/chunklist_b264000.m3u8">Aastha Hindi</option>
-  </optgroup>
-  <optgroup label="Music">
-    <option value="https://mhlive.paramountinfosystem.com/mhonemusictest/d0dbe915091d400bd8ee7f27f0791303.sdp/playlist.m3u8">MH1</option>
-    <option value="https://d35j504z0x2vu2.cloudfront.net/v1/manifest/0bc8e8376bd8417a1b6761138aa41c26c7309312/9xm/23886666-8fc5-470f-aab1-bd637ed607b1/3.m3u8">9XM</option>
-    <option value="https://cdn-uw2-prod.tsv2.amagi.tv/linear/amg01412-xiaomiasia-yrfmusic-xiaomi/playlist.m3u8">YRF Music</option>
-  </optgroup>
-  <optgroup label="Soap">
-    <option value="https://tv.bdixtv24.com/toffee/live.php?id=2bec2112b890&e=.m3u8">Sony</option>
-  </optgroup>
-</select>
-  </div>
-  <div class="channel-card">
-    <video id="video" controls autoplay muted></video>
-    <div class="channel-title" id="channelName">9XM</div>
-  </div>
-  <footer>📺 &copy; 2025 StreamNow. All rights belong to original broadcaster. 🚫📢🎉</footer>
-  <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
-  <script>
-    const video = document.getElementById('video');
+<header id="mainHeader">
+   📡 StreamNow
+  </header>
+<p style="text-align: center; opacity: 0.8;">
+   Stream your favorite TV channels – no ads, fast and free.
+  </p>
+<div class="selector">
+<select id="channelSelector"><optgroup label="News"><option value="https://ndtv24x7elemarchana.akamaized.net/hls/live/2003678/ndtv24x7/masterp_720p@3.m3u8">NDTV</option><option value="https://vidcdn.vidgyor.com/news24-origin/liveabr/playlist.m3u8">News24</option><option value="https://server.livelegitpro.in/globalpunjab/globalpunjab/tracks-v1a1/mono.ts.m3u8">Global Punjab</option><option value="https://feeds.intoday.in/aajtak/api/aajtakhd/master.m3u8">Aajtak HD</option><option value="https://indiatodaylive.akamaized.net/hls/live/2014320/indiatoday/indiatodaylive/playlist.m3u8">India Today</option></optgroup><optgroup label="Spiritual"><option value="https://aasthaott.akamaized.net/110923/smil:bhajan.smil/chunklist_b264000.m3u8">Aastha Hindi</option></optgroup><optgroup label="Music"><option value="https://d35j504z0x2vu2.cloudfront.net/v1/manifest/0bc8e8376bd8417a1b6761138aa41c26c7309312/9xm/23886666-8fc5-470f-aab1-bd637ed607b1/3.m3u8">9XM</option><option value="https://cdn-uw2-prod.tsv2.amagi.tv/linear/amg01412-xiaomiasia-yrfmusic-xiaomi/playlist.m3u8">YRF Music</option><option value="https://mcncdndigital.com/balleballetv/tracks-v1a1/mono.ts.m3u8">Balle Balle</option></optgroup></select>
+</div>
+<div class="channel-card">
+<div id="loadingIndicator">
+    ⏳ Loading...
+   </div>
+<video autoplay="" controls="" id="video" muted="">
+</video>
+<div class="channel-title" id="channelName">
+    9XM
+   </div>
+</div>
+<footer>
+   📺 © 2025 StreamNow. All rights belong to original broadcaster. 🚫📢🎉
+  </footer>
+<script src="https://cdn.jsdelivr.net/npm/hls.js@latest">
+</script>
+<script>
+   const video = document.getElementById('video');
     const selector = document.getElementById('channelSelector');
     const channelName = document.getElementById('channelName');
     function loadStream(url, name) {
       channelName.textContent = name;
+      loadingIndicator.style.display = 'block';
+
+      // Clean up previous event listeners
+      video.onplaying = null;
+
       if (Hls.isSupported()) {
-        if (window.hls) {
-          window.hls.destroy();
-        }
+        if (window.hls) window.hls.destroy();
         const hls = new Hls();
         window.hls = hls;
         hls.loadSource(url);
         hls.attachMedia(video);
+        hls.on(Hls.Events.MANIFEST_PARSED, function () {
+          video.play();
+        });
+        hls.on(Hls.Events.ERROR, function () {
+          loadingIndicator.style.display = 'none';
+        });
       } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
         video.src = url;
+        video.load();
       } else {
         alert('This browser does not support HLS streaming.');
+        loadingIndicator.style.display = 'none';
+        return;
       }
+
+      // Hide loader only when actual playback begins
+      video.onplaying = () => {
+        loadingIndicator.style.display = 'none';
+      };
+
+      // Fallback in case 'playing' doesn't fire
+      setTimeout(() => {
+        loadingIndicator.style.display = 'none';
+      }, 10000);
     }
     selector.addEventListener('change', () => {
       const name = selector.options[selector.selectedIndex].textContent;
